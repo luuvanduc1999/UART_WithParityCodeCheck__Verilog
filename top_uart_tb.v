@@ -13,13 +13,13 @@ module top_uart_tb();
    
    
      reg clk, reset;
-     reg rd_uart, wr_uart, rx;
+     reg rd_uart, wr_uart;
      reg [7:0] w_data;
-     wire tx_full, rx_empty, tx;
+     wire tx_full, rx_empty;
      wire [7:0] r_data;
-   
-     top_uart DUT(.clk(clk), .reset(reset), .rd_uart(rd_uart), .wr_uart(wr_uart), .rx(rx),
-                  .w_data(w_data), .tx_full(tx_full), .rx_empty(rx_empty), .tx(tx), .r_data(r_data));
+       
+     top_uart DUT(.clk(clk), .reset(reset), .rd_uart(rd_uart), .wr_uart(wr_uart),
+                  .w_data(w_data), .tx_full(tx_full), .rx_empty(rx_empty), .r_data(r_data));
                   
     always
     begin
@@ -39,20 +39,21 @@ module top_uart_tb();
   
      initial
      begin
-       rd_uart = 1'b1;
-       wr_uart = 1'b0;
-       w_data = 8'b11100101;
-       #(20);
+       rd_uart = 1'b0;
        wr_uart = 1'b1;
-       #(20);
-       w_data = 8'b10010101;
-       #(20);
-       w_data = 8'b11001110;
-       #(20);
-       w_data = 8'b1010110;
-       #(20);
-       repeat(100000) @(negedge clk);
+       w_data = 8'b11100101;
+       repeat(2) @(negedge clk);
        
+       
+       w_data = 8'b10010101;
+       @(negedge clk);
+       w_data = 8'b11001100;
+       repeat(2) @(negedge clk);
+       wr_uart=1'b0;
+       #(2282880);
+       rd_uart = 1'b1;
+       #70;
+       rd_uart = 1'b0;
   end
        
      

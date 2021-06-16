@@ -1,6 +1,25 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06/09/2021 04:12:59 PM
+// Design Name: 
+// Module Name: uart_tx
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-//Listing 8.3
+
 module uart_tx
    #(
      parameter DBIT = 8,     // # data bits
@@ -15,18 +34,22 @@ module uart_tx
    );
 
    // symbolic state declaration
-   localparam [1:0]
-      idle  = 2'b00,
-      start = 2'b01,
-      data  = 2'b10,
-      stop  = 2'b11;
+   localparam [2:0]
+      idle      = 3'b000,
+      start     = 3'b001,
+      data      = 3'b010,
+      parity      = 3'b011,
+      stop   = 3'b100;
 
    // signal declaration
-   reg [1:0] state_reg, state_next;
+   reg [2:0] state_reg, state_next;
    reg [3:0] s_reg, s_next;
    reg [2:0] n_reg, n_next;
-   reg [7:0] b_reg, b_next;
+   reg [8:0] b_reg, b_next;
+   reg p;
    reg tx_reg, tx_next;
+   
+
 
    // body
    // FSMD state & data registers
@@ -51,6 +74,7 @@ module uart_tx
    // FSMD next-state logic & functional units
    always @*
    begin
+      p = din[0] ^ din[1] ^ din[2] ^ din[3] ^ din[4] ^ din[5] ^ din[6] ^ din[7];
       state_next = state_reg;
       tx_done_tick = 1'b0;
       s_next = s_reg;
@@ -65,7 +89,7 @@ module uart_tx
                   begin
                      state_next = start;
                      s_next = 0;
-                     b_next = din;
+                     b_next = {p,din};
                   end
             end
          start:
@@ -90,12 +114,24 @@ module uart_tx
                         s_next = 0;
                         b_next = b_reg >> 1;
                         if (n_reg==(DBIT-1))
-                           state_next = stop ;
+                           state_next = parity ;
                         else
                            n_next = n_reg + 1;
                      end
                   else
                      s_next = s_reg + 1;
+            end
+         parity:
+            begin
+                tx_next = b_reg[0];
+                if(s_tick==1)
+                    if(s_reg==15)
+                        begin
+                            state_next = stop;
+                            s_next = 0;
+                        end
+                    else
+                       s_next = s_reg + 1; 
             end
          stop:
             begin

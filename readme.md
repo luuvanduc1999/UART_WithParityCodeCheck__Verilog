@@ -5,6 +5,7 @@
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
+   <ol>
     <li><a href="#Structure">Structure</a></li>
     <li><a href="#BitRule">Roadmap</a></li>
     <li><a href="#TX">TX</a></li>

@@ -1,13 +1,15 @@
 ## UART with parity bit
 
-**Structure and bit rule**
-![Structure](img/structure.png)
+### Structure
 ![Structure](img/bit_rule.png)
+### bit rule
+![Structure](img/structure.png)
 
-**TX**
+
+## TX
 ![Structure](img/TX_state_machine.png)
 ![Structure](img/TX.png)
 
-**RX**
+## RX
 ![Structure](img/RX_state_machine.png)
 ![Structure](img/RX.png)

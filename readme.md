@@ -1,0 +1,1 @@
+**UART with parity bit**

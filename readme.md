@@ -14,11 +14,11 @@
 </details>
 
 ## Structure
-![Structure](img/bit_rule.png)
-
-## BitRule
 ![Structure](img/structure.png)
 
+## BitRule
+
+![Structure](img/bit_rule.png)
 
 ## TX
 ### State machine

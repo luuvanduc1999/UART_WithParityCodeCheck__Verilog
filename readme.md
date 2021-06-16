@@ -7,7 +7,7 @@
   <summary>Table of Contents</summary>
    <ol>
     <li><a href="#Structure">Structure</a></li>
-    <li><a href="#BitRule">Roadmap</a></li>
+    <li><a href="#BitRule">BitRule</a></li>
     <li><a href="#TX">TX</a></li>
     <li><a href="#RX">RX</a></li>
   </ol>

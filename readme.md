@@ -1,5 +1,5 @@
 ## UART with parity bit
-
+There is a basic UART that support optional parity bit, settable baud and data width, written in Verilog with testbenches.
 
 
 <!-- TABLE OF CONTENTS -->
